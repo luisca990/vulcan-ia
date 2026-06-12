@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VULCAN-AI 2026 | Monitoreo Autónomo Nevado del Ruiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --slate: #2f2f2f;
+    --slate-mid: #3d3d3d;
+    --slate-light: #5a5a5a;
+    --snow: #f8f8f6;
+    --snow-mid: #efefeb;
+    --white: #ffffff;
+    --orange: #ff6600;
+    --orange-light: #ff8533;
+    --orange-pale: #fff3eb;
+    --orange-deep: #cc4d00;
+    --ash: #8a8a8a;
+    --border: rgba(47,47,47,0.12);
+    --border-strong: rgba(47,47,47,0.22);
+    --font: 'Inter', sans-serif;
+    --font-display: 'Space Grotesk', sans-serif;
+    --nav-h: 64px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font);
+    background: var(--snow);
+    color: var(--slate);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── NAVBAR ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    height: var(--nav-h);
+    background: rgba(248,248,246,0.93);
+    backdrop-filter: blur(10px);
+    border-bottom: 0.5px solid var(--border);
+    display: flex; align-items: center;
+    padding: 0 2rem;
+    justify-content: space-between;
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.05rem;
+    letter-spacing: -0.02em;
+    display: flex; align-items: center; gap: 8px;
+    color: var(--slate);
+    text-decoration: none;
+  }
+  .nav-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--orange);
+    animation: pulse-dot 2s infinite;
+  }
+  @keyframes pulse-dot {
+    0%,100%{opacity:1;transform:scale(1)}
+    50%{opacity:.6;transform:scale(0.85)}
+  }
+  .nav-links {
+    display: flex; gap: 0; list-style: none;
+  }
+  .nav-links a {
+    display: block;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.825rem;
+    font-weight: 500;
+    color: var(--slate-light);
+    text-decoration: none;
+    border-radius: 6px;
+    transition: color 0.15s, background 0.15s;
+  }
+  .nav-links a:hover { color: var(--slate); background: var(--snow-mid); }
+  .nav-cta {
+    background: var(--orange) !important;
+    color: var(--white) !important;
+    border-radius: 6px;
+    padding: 0.35rem 1rem !important;
+  }
+  .nav-cta:hover { background: var(--orange-deep) !important; }
+
+  /* ── SECTIONS COMMON ── */
+  section { padding: 6rem 0; }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; }
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 1rem;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3.5vw, 2.6rem);
+    font-weight: 700;
+    line-height: 1.18;
+    letter-spacing: -0.03em;
+    color: var(--slate);
+    max-width: 700px;
+  }
+  .section-lead {
+    font-size: 1.05rem;
+    color: var(--slate-light);
+    max-width: 620px;
+    margin-top: 1.1rem;
+    line-height: 1.75;
+  }
+
+  /* ── HERO ── */
+  #hero {
+    min-height: 100vh;
+    padding-top: calc(var(--nav-h) + 4rem);
+    padding-bottom: 5rem;
+    background: linear-gradient(160deg, var(--slate) 0%, #1e1e1e 55%, #2a1a0a 100%);
+    display: flex; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  #hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 600px 400px at 70% 40%, rgba(255,102,0,0.12) 0%, transparent 70%),
+      radial-gradient(ellipse 300px 300px at 20% 80%, rgba(255,102,0,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(255,102,0,0.15);
+    border: 0.5px solid rgba(255,102,0,0.4);
+    border-radius: 100px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #ff9955;
+    margin-bottom: 1.5rem;
+  }
+  .hero-badge-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--orange);
+    animation: pulse-dot 1.5s infinite;
+  }
+  .hero-headline {
+    font-family: var(--font-display);
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    color: var(--snow);
+    margin-bottom: 1.5rem;
+  }
+  .hero-headline span {
+    color: var(--orange);
+  }
+  .hero-sub {
+    font-size: 1.1rem;
+    color: rgba(248,248,246,0.65);
+    line-height: 1.7;
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--orange);
+    color: var(--white);
+    border: none;
+    padding: 0.85rem 1.75rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: background 0.15s, transform 0.1s;
+    font-family: var(--font);
+  }
+  .btn-primary:hover { background: var(--orange-light); transform: translateY(-1px); }
+  .btn-ghost {
+    background: transparent;
+    color: rgba(248,248,246,0.75);
+    border: 0.5px solid rgba(248,248,246,0.2);
+    padding: 0.85rem 1.75rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.15s;
+    font-family: var(--font);
+  }
+  .btn-ghost:hover { border-color: rgba(248,248,246,0.45); color: var(--snow); }
+
+  .hero-visual {
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+  .hero-stat-card {
+    background: rgba(255,255,255,0.05);
+    border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    display: flex; align-items: flex-start; gap: 1rem;
+  }
+  .hero-stat-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: rgba(255,102,0,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; flex-shrink: 0;
+  }
+  .hero-stat-num {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--snow);
+    letter-spacing: -0.04em;
+    line-height: 1;
+  }
+  .hero-stat-num span { color: var(--orange); }
+  .hero-stat-label {
+    font-size: 0.78rem;
+    color: rgba(248,248,246,0.5);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+  .hero-social-proof {
+    margin-top: 2rem;
+    font-size: 0.78rem;
+    color: rgba(248,248,246,0.4);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .proof-flag { width: 16px; height: 12px; border-radius: 2px; display: inline-block; }
+
+  /* ── PROBLEMA ── */
+  #problema { background: var(--white); }
+  .problema-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    margin-top: 3.5rem;
+  }
+  .stat-block {
+    display: flex; flex-direction: column; gap: 1.5rem;
+  }
+  .stat-item {
+    display: flex; gap: 1.25rem; align-items: flex-start;
+  }
+  .stat-line {
+    width: 3px; border-radius: 2px;
+    background: var(--orange);
+    flex-shrink: 0;
+    margin-top: 4px;
+  }
+  .stat-num-lg {
+    font-family: var(--font-display);
+    font-size: 2.8rem;
+    font-weight: 700;
+    letter-spacing: -0.05em;
+    color: var(--slate);
+    line-height: 1;
+  }
+  .stat-num-lg sub { font-size: 1rem; font-weight: 500; }
+  .stat-desc { font-size: 0.9rem; color: var(--slate-light); margin-top: 4px; line-height: 1.5; }
+
+  .problema-points { display: flex; flex-direction: column; gap: 1.25rem; }
+  .problema-point {
+    background: var(--snow);
+    border-radius: 10px;
+    border: 0.5px solid var(--border);
+    padding: 1.25rem 1.5rem;
+    display: flex; gap: 1rem; align-items: flex-start;
+  }
+  .problema-point-icon {
+    font-size: 1.5rem; flex-shrink: 0; margin-top: 2px;
+  }
+  .problema-point-title {
+    font-weight: 600; font-size: 0.92rem; color: var(--slate); margin-bottom: 4px;
+  }
+  .problema-point-text { font-size: 0.85rem; color: var(--slate-light); line-height: 1.6; }
+
+  /* ── EQUIPO ── */
+  #equipo { background: var(--snow); }
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.25rem;
+    margin-top: 3rem;
+  }
+  .team-card {
+    background: var(--white);
+    border-radius: 14px;
+    border: 0.5px solid var(--border);
+    padding: 1.75rem 1.25rem;
+    text-align: center;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .team-card:hover { border-color: var(--orange); transform: translateY(-3px); }
+  .team-avatar {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--orange-pale), var(--orange));
+    margin: 0 auto 1rem;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--white);
+    border: 2.5px solid var(--white);
+    box-shadow: 0 0 0 1px var(--border);
+  }
+  .team-name {
+    font-weight: 600; font-size: 0.88rem; color: var(--slate); margin-bottom: 4px;
+  }
+  .team-role {
+    font-size: 0.75rem; color: var(--orange); font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px;
+  }
+  .team-desc { font-size: 0.78rem; color: var(--slate-light); line-height: 1.55; }
+
+  /* ── METODOLOGÍA ── */
+  #metodologia { background: var(--white); }
+  .meto-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  .meto-card {
+    border: 0.5px solid var(--border);
+    border-radius: 14px;
+    padding: 2rem 1.5rem;
+    background: var(--snow);
+    transition: border-color 0.2s;
+  }
+  .meto-card:hover { border-color: var(--orange); }
+  .meto-icon {
+    font-size: 2rem; margin-bottom: 1rem; display: block;
+  }
+  .meto-title {
+    font-family: var(--font-display);
+    font-weight: 700; font-size: 1rem; color: var(--slate);
+    margin-bottom: 0.6rem;
+  }
+  .meto-text { font-size: 0.85rem; color: var(--slate-light); line-height: 1.65; }
+  .meto-tag {
+    display: inline-block;
+    margin-top: 1rem;
+    font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--orange-deep);
+    background: var(--orange-pale);
+    padding: 3px 10px; border-radius: 100px;
+  }
+
+  /* ── HALLAZGOS ── */
+  #hallazgos { background: var(--slate); }
+  #hallazgos .section-label { color: #ff9955; }
+  #hallazgos .section-title { color: var(--snow); }
+  #hallazgos .section-lead { color: rgba(248,248,246,0.6); }
+  .findings-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem;
+    margin-top: 3rem;
+  }
+  .finding-card {
+    background: rgba(255,255,255,0.05);
+    border: 0.5px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 2rem;
+    position: relative; overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .finding-card:hover { border-color: rgba(255,102,0,0.5); }
+  .finding-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--orange);
+  }
+  .finding-num {
+    font-family: var(--font-display);
+    font-size: 3rem; font-weight: 700;
+    letter-spacing: -0.06em; line-height: 1;
+    color: var(--orange);
+    margin-bottom: 0.5rem;
+  }
+  .finding-num small { font-size: 1.2rem; }
+  .finding-title {
+    font-weight: 600; font-size: 0.95rem; color: var(--snow); margin-bottom: 0.5rem;
+  }
+  .finding-desc { font-size: 0.82rem; color: rgba(248,248,246,0.55); line-height: 1.6; }
+
+  /* ── REFERENTES ── */
+  #referentes { background: var(--snow); }
+  .ref-tabs {
+    display: flex; gap: 0; margin-top: 2.5rem;
+    border-bottom: 1.5px solid var(--border);
+  }
+  .ref-tab {
+    padding: 0.6rem 1.25rem;
+    font-size: 0.85rem; font-weight: 500;
+    color: var(--ash);
+    cursor: pointer; border-bottom: 2px solid transparent;
+    transition: all 0.15s;
+    margin-bottom: -1.5px;
+    background: none; border-top: none; border-left: none; border-right: none;
+    font-family: var(--font);
+  }
+  .ref-tab.active { color: var(--orange); border-bottom-color: var(--orange); }
+  .ref-content { display: none; margin-top: 2rem; }
+  .ref-content.active { display: block; }
+  .ref-cases {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem;
+  }
+  .ref-case {
+    background: var(--white); border-radius: 12px;
+    border: 0.5px solid var(--border);
+    padding: 1.5rem;
+  }
+  .ref-case-flag { font-size: 1.6rem; margin-bottom: 0.75rem; }
+  .ref-case-title { font-weight: 600; font-size: 0.9rem; color: var(--slate); margin-bottom: 6px; }
+  .ref-case-text { font-size: 0.82rem; color: var(--slate-light); line-height: 1.6; }
+  .ref-case-tag {
+    display: inline-block; margin-top: 10px;
+    font-size: 0.68rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em;
+    color: var(--orange-deep); background: var(--orange-pale);
+    padding: 3px 10px; border-radius: 100px;
+  }
+
+  /* ── TABLA COMPARATIVA ── */
+  #comparativa { background: var(--white); }
+  .table-wrap {
+    margin-top: 3rem;
+    border: 0.5px solid var(--border);
+    border-radius: 16px; overflow: hidden;
+  }
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: var(--slate); }
+  thead th {
+    padding: 1rem 1.5rem;
+    text-align: left;
+    font-size: 0.8rem; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: rgba(248,248,246,0.7);
+  }
+  thead th:first-child { color: var(--snow); }
+  tbody tr { border-top: 0.5px solid var(--border); }
+  tbody tr:hover { background: var(--snow); }
+  tbody td { padding: 1rem 1.5rem; font-size: 0.88rem; color: var(--slate); vertical-align: middle; }
+  tbody td:first-child { font-weight: 600; color: var(--slate-light); }
+  .td-satellite { color: var(--ash) !important; }
+  .td-uav { color: var(--orange) !important; font-weight: 600 !important; }
+  .td-badge-warn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: #fff7ed; color: #9a3d00;
+    padding: 3px 10px; border-radius: 100px;
+    font-size: 0.75rem; font-weight: 600;
+  }
+  .td-badge-good {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: var(--orange-pale); color: var(--orange-deep);
+    padding: 3px 10px; border-radius: 100px;
+    font-size: 0.75rem; font-weight: 600;
+  }
+
+  /* ── PROPUESTA ── */
+  #propuesta { background: var(--snow); }
+  .propuesta-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+    align-items: start; margin-top: 3rem;
+  }
+  .cost-bars { display: flex; flex-direction: column; gap: 1rem; margin-top: 1.5rem; }
+  .cost-bar-row { display: flex; flex-direction: column; gap: 6px; }
+  .cost-bar-label { font-size: 0.8rem; color: var(--slate-light); display: flex; justify-content: space-between; }
+  .cost-bar-track {
+    height: 10px; background: var(--snow-mid);
+    border-radius: 100px; overflow: hidden;
+  }
+  .cost-bar-fill {
+    height: 100%; border-radius: 100px;
+    background: var(--orange);
+    transition: width 1s ease;
+  }
+  .cost-bar-fill.alt { background: var(--slate-light); }
+
+  .impl-list { display: flex; flex-direction: column; gap: 1rem; }
+  .impl-item {
+    display: flex; gap: 1rem; align-items: flex-start;
+    background: var(--white); border: 0.5px solid var(--border);
+    border-radius: 10px; padding: 1.25rem;
+  }
+  .impl-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .impl-title { font-weight: 600; font-size: 0.88rem; color: var(--slate); }
+  .impl-text { font-size: 0.8rem; color: var(--slate-light); line-height: 1.55; margin-top: 4px; }
+
+  /* ── VIDEO ── */
+  #video { background: var(--slate); }
+  #video .section-label { color: #ff9955; }
+  #video .section-title { color: var(--snow); }
+  #video .section-lead { color: rgba(248,248,246,0.6); }
+  .video-placeholder {
+    margin-top: 3rem;
+    background: rgba(255,255,255,0.05);
+    border: 0.5px solid rgba(255,255,255,0.12);
+    border-radius: 16px; overflow: hidden;
+    aspect-ratio: 16/9;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    cursor: pointer;
+    transition: border-color 0.2s;
+  }
+  .video-placeholder:hover { border-color: rgba(255,102,0,0.5); }
+  .video-placeholder::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 400px 300px at center, rgba(255,102,0,0.08) 0%, transparent 70%);
+  }
+  .play-btn {
+    width: 72px; height: 72px;
+    background: var(--orange);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem;
+    cursor: pointer; z-index: 1;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .play-btn:hover { transform: scale(1.08); background: var(--orange-light); }
+  .video-caption {
+    position: absolute; bottom: 1.5rem; left: 0; right: 0;
+    text-align: center;
+    font-size: 0.8rem; color: rgba(248,248,246,0.4);
+    z-index: 1;
+  }
+
+  /* ── CRÓNICA ── */
+  #cronica { background: var(--white); }
+  .cronica-timeline { margin-top: 3rem; display: flex; flex-direction: column; gap: 0; }
+  .cronica-entry {
+    display: grid; grid-template-columns: 120px 1fr;
+    gap: 2rem; position: relative;
+    padding-bottom: 2.5rem;
+  }
+  .cronica-entry::before {
+    content: '';
+    position: absolute; left: 120px; top: 8px; bottom: 0;
+    width: 1px; background: var(--border);
+    transform: translateX(calc(1rem - 0.5px));
+  }
+  .cronica-entry:last-child::before { display: none; }
+  .cronica-date {
+    font-size: 0.75rem; font-weight: 600;
+    color: var(--orange); text-align: right;
+    padding-top: 4px; letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .cronica-dot {
+    position: absolute; left: 120px;
+    top: 6px; width: 10px; height: 10px;
+    border-radius: 50%; background: var(--orange);
+    transform: translateX(calc(1rem - 5px));
+    border: 2px solid var(--white);
+    box-shadow: 0 0 0 1px var(--orange);
+  }
+  .cronica-body {
+    padding-left: 2rem;
+  }
+  .cronica-title {
+    font-weight: 600; font-size: 0.95rem; color: var(--slate); margin-bottom: 6px;
+  }
+  .cronica-text { font-size: 0.85rem; color: var(--slate-light); line-height: 1.7; }
+  .cronica-tag {
+    display: inline-block; margin-top: 8px;
+    font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em;
+    padding: 3px 10px; border-radius: 100px;
+  }
+  .tag-reto { background: #fff1f0; color: #a33; }
+  .tag-logro { background: var(--orange-pale); color: var(--orange-deep); }
+  .tag-aprendizaje { background: #f0f4ff; color: #2244aa; }
+
+  /* ── CTA ── */
+  #cta {
+    background: linear-gradient(135deg, var(--orange-deep) 0%, var(--orange) 50%, #ff8533 100%);
+    padding: 6rem 0; text-align: center;
+  }
+  #cta .section-title { color: var(--white); max-width: 100%; }
+  #cta .section-lead { color: rgba(255,255,255,0.75); margin: 1rem auto 0; }
+  .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2.5rem; }
+  .btn-white {
+    background: var(--white); color: var(--orange-deep);
+    border: none;
+    padding: 0.9rem 2rem;
+    border-radius: 8px;
+    font-size: 0.9rem; font-weight: 700;
+    cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: transform 0.15s;
+    font-family: var(--font);
+  }
+  .btn-white:hover { transform: translateY(-2px); }
+  .btn-outline-white {
+    background: transparent; color: var(--white);
+    border: 1.5px solid rgba(255,255,255,0.6);
+    padding: 0.9rem 2rem; border-radius: 8px;
+    font-size: 0.9rem; font-weight: 500;
+    cursor: pointer; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: all 0.15s;
+    font-family: var(--font);
+  }
+  .btn-outline-white:hover { border-color: var(--white); background: rgba(255,255,255,0.1); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--slate);
+    padding: 3rem 0 2rem;
+    color: rgba(248,248,246,0.4);
+    font-size: 0.8rem;
+  }
+  .footer-inner {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    flex-wrap: wrap; gap: 2rem;
+  }
+  .footer-logo {
+    font-family: var(--font-display);
+    font-weight: 700; font-size: 1rem;
+    color: var(--snow);
+    margin-bottom: 6px;
+  }
+  .footer-authors { color: rgba(248,248,246,0.5); line-height: 1.8; }
+  .footer-authors a { color: rgba(248,248,246,0.6); text-decoration: none; }
+  .footer-authors a:hover { color: var(--orange); }
+  .footer-meta { text-align: right; }
+  .footer-badge {
+    display: inline-block;
+    background: rgba(255,102,0,0.15);
+    border: 0.5px solid rgba(255,102,0,0.3);
+    color: #ff9955; border-radius: 100px;
+    padding: 4px 12px; font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.05em; margin-bottom: 8px;
+  }
+  .footer-divider {
+    margin-top: 2.5rem; padding-top: 1.5rem;
+    border-top: 0.5px solid rgba(255,255,255,0.08);
+    text-align: center;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero-grid, .problema-grid, .propuesta-grid { grid-template-columns: 1fr; }
+    .meto-grid { grid-template-columns: 1fr; }
+    .findings-grid { grid-template-columns: 1fr; }
+    nav { padding: 0 1rem; }
+    .nav-links { display: none; }
+    .container { padding: 0 1rem; }
+    .cronica-entry { grid-template-columns: 80px 1fr; gap: 1rem; }
+    .footer-inner { flex-direction: column; }
+    .footer-meta { text-align: left; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav>
+  <a href="#hero" class="nav-logo">
+    <span class="nav-dot"></span>
+    VULCAN-AI
+  </a>
+  <ul class="nav-links">
+    <li><a href="#problema">Problemática</a></li>
+    <li><a href="#metodologia">Metodología</a></li>
+    <li><a href="#hallazgos">Hallazgos</a></li>
+    <li><a href="#referentes">Referentes</a></li>
+    <li><a href="#comparativa">Comparativa</a></li>
+    <li><a href="#cronica">Crónica</a></li>
+    <li><a href="#cta" class="nav-cta">Informe 2026</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-badge">
+          <span class="hero-badge-dot"></span>
+          Basado en observaciones 2024–2025
+        </div>
+        <h1 class="hero-headline">
+          IA que predice erupciones con <span>12 horas</span> de antelación
+        </h1>
+        <p class="hero-sub">
+          Sistemas aeroespaciales autónomos y algoritmos de entropía de Shannon para el monitoreo del Complejo Volcánico Nevado del Ruiz. Precisión centimétrica. Riesgo humano: cero.
+        </p>
+        <div class="hero-actions">
+          <a href="#cta" class="btn-primary">
+            Acceder al Informe Técnico 2026 →
+          </a>
+          <a href="#comparativa" class="btn-ghost">
+            Ver Gemelo Digital
+          </a>
+        </div>
+        <div class="hero-social-proof">
+          Tecnología validada en ·
+          <strong style="color:rgba(248,248,246,0.6)">🇯🇵 Japón</strong> ·
+          <strong style="color:rgba(248,248,246,0.6)">🇮🇸 Islandia</strong> ·
+          <strong style="color:rgba(248,248,246,0.6)">🇨🇴 Colombia</strong>
+        </div>
+      </div>
+      <div class="hero-visual">
+        <div class="hero-stat-card">
+          <div class="hero-stat-icon">🌋</div>
+          <div>
+            <div class="hero-stat-num"><span>12h</span></div>
+            <div class="hero-stat-label">Antelación predictiva de erupción</div>
+          </div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-icon">🛸</div>
+          <div>
+            <div class="hero-stat-num">5<small style="font-size:1.5rem;color:rgba(248,248,246,0.5)">,321</small></div>
+            <div class="hero-stat-label">msnm — altitud operacional UAV</div>
+          </div>
+        </div>
+        <div class="hero-stat-card">
+          <div class="hero-stat-icon">📡</div>
+          <div>
+            <div class="hero-stat-num"><span>0</span></div>
+            <div class="hero-stat-label">Riesgo humano — operación 100% remota</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROBLEMA ── -->
+<section id="problema">
+  <div class="container">
+    <p class="section-label">01 — Problemática</p>
+    <h2 class="section-title">El desafío de monitorear un volcán en los Andes</h2>
+    <p class="section-lead">A 5,321 msnm, con nubes permanentes y concentraciones de SO₂ letales, el monitoreo tradicional puntual y reactivo ya no es suficiente para proteger 2 millones de vidas.</p>
+
+    <div class="problema-grid">
+      <div class="stat-block">
+        <div class="stat-item">
+          <div class="stat-line" style="height:64px"></div>
+          <div>
+            <div class="stat-num-lg">500M<sub>+</sub></div>
+            <div class="stat-desc">personas en el mundo viven bajo riesgo volcánico activo. El Ruiz es uno de los 10 más peligrosos del planeta.</div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-line" style="height:64px"></div>
+          <div>
+            <div class="stat-num-lg">64</div>
+            <div class="stat-desc">municipios colombianos en la zona de impacto directo, con más de 2 millones de habitantes en riesgo.</div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-line" style="height:64px"></div>
+          <div>
+            <div class="stat-num-lg">$5B<sub>+</sub></div>
+            <div class="stat-desc">en pérdidas económicas globales por erupciones previas. Solo Eyjafjallajökull (Islandia, 2010) paralizó la aviación europea por semanas.</div>
+          </div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-line" style="height:48px"></div>
+          <div>
+            <div class="stat-num-lg">150<sub>ppm</sub></div>
+            <div class="stat-desc">de SO₂ son intolerables para el ser humano. El cráter Arenas supera ese umbral constantemente.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="problema-points">
+        <div class="problema-point">
+          <div class="problema-point-icon">🛰️</div>
+          <div>
+            <div class="problema-point-title">Monitoreo satelital bloqueado</div>
+            <div class="problema-point-text">La cobertura de nubes en los Andes impide la vigilancia satelital continua. Los "pasos" satelitales ocurren cada días, dejando ventanas ciegas críticas.</div>
+          </div>
+        </div>
+        <div class="problema-point">
+          <div class="problema-point-icon">🔩</div>
+          <div>
+            <div class="problema-point-title">Estaciones terrestres corroídas</div>
+            <div class="problema-point-text">Las estaciones fijas sufren corrosión ácida extrema y destrucción por proyectiles balísticos en erupciones freáticas. Su mantenimiento requiere exposición directa al peligro.</div>
+          </div>
+        </div>
+        <div class="problema-point">
+          <div class="problema-point-icon">📍</div>
+          <div>
+            <div class="problema-point-title">Cobertura punteada, no continua</div>
+            <div class="problema-point-text">El modelo tradicional de estaciones fijas crea "islas" de datos. Las anomalías entre puntos de medición pasan desapercibidas hasta que es demasiado tarde.</div>
+          </div>
+        </div>
+        <div class="problema-point">
+          <div class="problema-point-icon">🌊</div>
+          <div>
+            <div class="problema-point-title">Infraestructura crítica en riesgo</div>
+            <div class="problema-point-text">Los lahares del Ruiz amenazan hidroeléctricas en los ríos Gualí y Lagunilla, activos energéticos vitales para el país. La tragedia de Armero (1985) dejó 25,000 víctimas.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EQUIPO ── -->
+<section id="equipo">
+  <div class="container">
+    <p class="section-label">02 — Equipo de Investigación</p>
+    <h2 class="section-title">Cinco perspectivas, una solución</h2>
+    <p class="section-lead">Un equipo multidisciplinar de ingeniería aeronáutica que integra análisis social, económico, técnico y tecnológico.</p>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-avatar">JR</div>
+        <div class="team-name">Juan Felipe Ramón</div>
+        <div class="team-role">Contexto & Riesgo Global</div>
+        <div class="team-desc">Análisis del contexto volcánico mundial, historial del Nevado del Ruiz y justificación de la urgencia de intervención tecnológica.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">SI</div>
+        <div class="team-name">Santiago Ibáñez</div>
+        <div class="team-role">Impacto Social & Variables</div>
+        <div class="team-desc">Modelado del impacto sobre los 64 municipios, análisis de variables de alerta temprana CO₂/SO₂ y protocolos de evacuación.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">IA</div>
+        <div class="team-name">Isabella Arenas</div>
+        <div class="team-role">Economía & Fallas Técnicas</div>
+        <div class="team-desc">Evaluación del costo-beneficio de la solución, análisis de infraestructura crítica y limitaciones del equipamiento convencional.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">LL</div>
+        <div class="team-name">Luisa Losada</div>
+        <div class="team-role">Referentes Internacionales</div>
+        <div class="team-desc">Estudio de casos en Japón, Guatemala e Islandia. Revisión del estado del arte de plataformas como VOLCANOMS 2026.</div>
+      </div>
+      <div class="team-card">
+        <div class="team-avatar">LR</div>
+        <div class="team-name">Luis Carlos Romero</div>
+        <div class="team-role">Propuesta UAV + IA</div>
+        <div class="team-desc">Diseño de la arquitectura tecnológica: drones VTOL, sensores MultiGAS, algoritmos de Entropía de Shannon y misiones autónomas.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── METODOLOGÍA ── -->
+<section id="metodologia">
+  <div class="container">
+    <p class="section-label">03 — Metodología</p>
+    <h2 class="section-title">Tres tecnologías que se integran en tiempo real</h2>
+    <p class="section-lead">La convergencia de UAVs de alta altitud, sensores geoquímicos y algoritmos de IA crea un sistema de alerta temprana sin precedentes.</p>
+
+    <div class="meto-grid">
+      <div class="meto-card">
+        <span class="meto-icon">🚁</span>
+        <div class="meto-title">UAVs Híbridos VTOL</div>
+        <div class="meto-text">Plataformas multirrotor capaces de operar a 5,000 msnm donde la densidad del aire cae al 50%. Autonomía de vuelo extendida con carga útil de 2.5 kg para sensores MultiGAS. Activación automática por APIs sísmicas en menos de 90 segundos.</div>
+        <span class="meto-tag">Hardware</span>
+      </div>
+      <div class="meto-card">
+        <span class="meto-icon">🧪</span>
+        <div class="meto-title">Sensores MultiGAS</div>
+        <div class="meto-text">Detección en tiempo real de CO₂, SO₂, H₂S y H₂O directamente en la pluma volcánica. La relación CO₂/SO₂ es el indicador clave: un aumento señala inyección de magma profundo antes de que cualquier sismógrafo lo detecte.</div>
+        <span class="meto-tag">Sensórica</span>
+      </div>
+      <div class="meto-card">
+        <span class="meto-icon">🧠</span>
+        <div class="meto-title">Entropía de Shannon + IA</div>
+        <div class="meto-text">El algoritmo mide cuándo las señales sísmicas pasan de caóticas a organizadas — patrón que precede el movimiento de fluidos magmáticos. La IA integra datos sísmicos, geoquímicos y térmicos para predecir erupciones con 12 horas de antelación.</div>
+        <span class="meto-tag">Inteligencia Artificial</span>
+      </div>
+      <div class="meto-card">
+        <span class="meto-icon">📡</span>
+        <div class="meto-title">Transmisión LoRaWAN</div>
+        <div class="meto-text">Red de telemetría de largo alcance que transmite datos del dron a la estación base con latencia mínima. Funciona donde el internet convencional falla: alta altitud, sin infraestructura, en condiciones de erupción.</div>
+        <span class="meto-tag">Telecomunicaciones</span>
+      </div>
+      <div class="meto-card">
+        <span class="meto-icon">🌡️</span>
+        <div class="meto-title">Termografía Infrarroja</div>
+        <div class="meto-text">Cámaras IR para mapeo térmico del cráter con resolución centimétrica. Permite identificar nuevas fumarolas, grietas activas y cambios en la distribución del campo de calor con días de anticipación a eventos eruptivos.</div>
+        <span class="meto-tag">Imagen Térmica</span>
+      </div>
+      <div class="meto-card">
+        <span class="meto-icon">🌐</span>
+        <div class="meto-title">Gemelo Digital</div>
+        <div class="meto-text">Modelo 3D actualizado en tiempo real del cráter Arenas mediante fotogrametría UAV. Integrado con VOLCANOMS para monitoreo satelital complementario. Base de datos abierta para la UNGRD y el SGC.</div>
+        <span class="meto-tag">Simulación Digital</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── HALLAZGOS ── -->
+<section id="hallazgos">
+  <div class="container">
+    <p class="section-label">04 — Hallazgos Clave</p>
+    <h2 class="section-title">Datos que cambian el protocolo de gestión de riesgo</h2>
+    <p class="section-lead">Cuatro métricas críticas que demuestran el salto cualitativo del sistema UAV/IA frente al monitoreo convencional.</p>
+
+    <div class="findings-grid">
+      <div class="finding-card">
+        <div class="finding-num">12<small>h</small></div>
+        <div class="finding-title">Antelación de erupciones</div>
+        <div class="finding-desc">Los algoritmos de Entropía de Shannon permiten predecir eventos eruptivos con hasta 12 horas de anticipación — tiempo suficiente para evacuar los 64 municipios en zona de riesgo del Nevado del Ruiz.</div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-num">100<small>%</small></div>
+        <div class="finding-title">Reducción de riesgo humano</div>
+        <div class="finding-desc">Operación completamente remota elimina la exposición de personal científico a concentraciones letales de SO₂ (>150 ppm), proyectiles balísticos y lahares en zona de exclusión del cráter Arenas.</div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-num">&lt;1<small>cm</small></div>
+        <div class="finding-title">Resolución centimétrica</div>
+        <div class="finding-desc">La fotogrametría UAV genera modelos 3D del cráter con precisión sub-centimétrica, superando en 1,000x la resolución de la imagenería satelital disponible para el arco volcánico andino.</div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-num">$B<small>s</small></div>
+        <div class="finding-title">Mitigación económica</div>
+        <div class="finding-desc">Un sistema de alerta temprana de 12 horas permite proteger las hidroeléctricas del Gualí y Lagunilla, la agricultura del Eje Cafetero y el tráfico aéreo sobre Colombia, evitando pérdidas de miles de millones de dólares.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── REFERENTES ── -->
+<section id="referentes">
+  <div class="container">
+    <p class="section-label">05 — Referentes & Antecedentes</p>
+    <h2 class="section-title">El mundo ya lo está haciendo — Colombia puede liderar</h2>
+    <p class="section-lead">Casos internacionales y contextos locales que validan la viabilidad técnica y económica de la propuesta.</p>
+
+    <div class="ref-tabs">
+      <button class="ref-tab active" onclick="showTab('intl', this)">Internacional</button>
+      <button class="ref-tab" onclick="showTab('local', this)">Colombia & Región</button>
+    </div>
+
+    <div class="ref-content active" id="tab-intl">
+      <div class="ref-cases">
+        <div class="ref-case">
+          <div class="ref-case-flag">🇯🇵</div>
+          <div class="ref-case-title">Volcán Ontake — Japón (2014)</div>
+          <div class="ref-case-text">Tras la erupción que mató a 63 personas, Japón implementó drones para muestreo de gases y ceniza en zonas de acceso imposible. El programa sirvió de base para el sistema de monitoreo autónomo ahora operativo en Sakurajima y Aso.</div>
+          <span class="ref-case-tag">Drones de reconocimiento</span>
+        </div>
+        <div class="ref-case">
+          <div class="ref-case-flag">🇬🇹</div>
+          <div class="ref-case-title">Volcán de Fuego — Guatemala (2018)</div>
+          <div class="ref-case-text">Drones multirrotores usados para mapeo de flujos piroclásticos después de la erupción que dejó 190 víctimas. Los modelos 3D generados por fotogrametría permitieron coordinar la búsqueda y rescate en zonas inaccesibles.</div>
+          <span class="ref-case-tag">Respuesta de emergencia</span>
+        </div>
+        <div class="ref-case">
+          <div class="ref-case-flag">🇮🇸</div>
+          <div class="ref-case-title">Eyjafjallajökull — Islandia (2010)</div>
+          <div class="ref-case-text">La erupción paralizó el espacio aéreo europeo por 8 días, causando pérdidas de $1.3 mil millones a aerolíneas. Evidenció que sin monitoreo proximal, los modelos de dispersión de ceniza son imprecisos y el cierre del espacio aéreo demasiado conservador.</div>
+          <span class="ref-case-tag">Impacto aviación civil</span>
+        </div>
+        <div class="ref-case">
+          <div class="ref-case-flag">🌍</div>
+          <div class="ref-case-title">VOLCANOMS 2026 — Latinoamérica</div>
+          <div class="ref-case-text">Plataforma de monitoreo satelital en tiempo real para toda la región. Operativa en 2026, pero con limitación crítica: requiere validación proximal con datos de drones para precisión centimétrica en la pluma volcánica. El Ruiz es candidato prioritario.</div>
+          <span class="ref-case-tag">Estado del arte 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="ref-content" id="tab-local">
+      <div class="ref-cases">
+        <div class="ref-case">
+          <div class="ref-case-flag">🇨🇴</div>
+          <div class="ref-case-title">Observatorio Vulcanológico del SGC</div>
+          <div class="ref-case-text">El Servicio Geológico Colombiano monitorea el Ruiz con estaciones sísmicas y GNSS. La limitación: estaciones fijas con mantenimiento de riesgo, sin capacidad de muestreo directo de gases en el cráter. Esta propuesta complementa su infraestructura sin reemplazarla.</div>
+          <span class="ref-case-tag">Socio institucional</span>
+        </div>
+        <div class="ref-case">
+          <div class="ref-case-flag">🌋</div>
+          <div class="ref-case-title">Nevado del Huila (Colombia)</div>
+          <div class="ref-case-text">El segundo volcán activo más peligroso del país. Comparte características geológicas con el Ruiz: lahares que alcanzan el Pacífico, poblaciones vulnerables y difícil acceso. La metodología UAV/IA diseñada para el Ruiz es directamente transferible.</div>
+          <span class="ref-case-tag">Escalabilidad</span>
+        </div>
+        <div class="ref-case">
+          <div class="ref-case-flag">💡</div>
+          <div class="ref-case-title">Armero — Lección de 1985</div>
+          <div class="ref-case-text">25,000 víctimas en 4 horas. El lahar del Ruiz llegó a Armero sin alerta efectiva. Con el sistema propuesto, la detección de anomalías geoquímicas 12 horas antes habría activado la evacuación total. Una tragedia que define por qué esta inversión es necesaria.</div>
+          <span class="ref-case-tag">Imperativo histórico</span>
+        </div>
+        <div class="ref-case">
+          <div class="ref-case-flag">⚡</div>
+          <div class="ref-case-title">Hidroeléctricas del Gualí y Lagunilla</div>
+          <div class="ref-case-text">Activos energéticos críticos para el departamento del Tolima. Un lahar de magnitud similar al de 1985 los destruiría, dejando sin energía a millones de personas. El monitoreo UAV protege directamente esta infraestructura con alertas a las 12 horas.</div>
+          <span class="ref-case-tag">Infraestructura crítica</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TABLA COMPARATIVA ── -->
+<section id="comparativa">
+  <div class="container">
+    <p class="section-label">06 — Análisis Comparativo</p>
+    <h2 class="section-title">Monitoreo Satelital vs. Propuesta UAV/IA</h2>
+    <p class="section-lead">La diferencia no es incremental — es un cambio de paradigma en capacidad de respuesta, precisión y seguridad operacional.</p>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Característica</th>
+            <th>Monitoreo Satelital Actual</th>
+            <th>Propuesta UAV + IA</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Resolución espacial</td>
+            <td class="td-satellite"><span class="td-badge-warn">⚠ Kilométrica / Métrica</span></td>
+            <td class="td-uav"><span class="td-badge-good">✓ Sub-centimétrica</span></td>
+          </tr>
+          <tr>
+            <td>Latencia de datos</td>
+            <td class="td-satellite"><span class="td-badge-warn">⚠ Días (repaso orbital)</span></td>
+            <td class="td-uav"><span class="td-badge-good">✓ Tiempo real (LoRaWAN)</span></td>
+          </tr>
+          <tr>
+            <td>Riesgo humano</td>
+            <td class="td-satellite">Bajo (remoto)</td>
+            <td class="td-uav"><span class="td-badge-good">✓ Cero — operación 100% autónoma</span></td>
+          </tr>
+          <tr>
+            <td>Precisión química</td>
+            <td class="td-satellite"><span class="td-badge-warn">⚠ Estimada (columna total)</span></td>
+            <td class="td-uav"><span class="td-badge-good">✓ Directa (en la pluma)</span></td>
+          </tr>
+          <tr>
+            <td>Afectación por nubes</td>
+            <td class="td-satellite"><span class="td-badge-warn">⚠ Crítica — Andes 60% nuboso</span></td>
+            <td class="td-uav"><span class="td-badge-good">✓ Sin efecto — vuelo bajo cubierta</span></td>
+          </tr>
+          <tr>
+            <td>Detección de CO₂/SO₂</td>
+            <td class="td-satellite"><span class="td-badge-warn">⚠ Indirecta y estimada</span></td>
+            <td class="td-uav"><span class="td-badge-good">✓ Directa — sensor MultiGAS</span></td>
+          </tr>
+          <tr>
+            <td>Anticipación eruptiva</td>
+            <td class="td-satellite"><span class="td-badge-warn">⚠ Horas / Sin predicción</span></td>
+            <td class="td-uav"><span class="td-badge-good">✓ 12 horas (Entropía de Shannon)</span></td>
+          </tr>
+          <tr>
+            <td>Costo de mantenimiento</td>
+            <td class="td-satellite">Alto (infraestructura fija + personal)</td>
+            <td class="td-uav">Moderado (flota reemplazable modularmente)</td>
+          </tr>
+          <tr>
+            <td>Escalabilidad</td>
+            <td class="td-satellite">Limitada a órbitas existentes</td>
+            <td class="td-uav"><span class="td-badge-good">✓ Alta — replicable en otros volcanes</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROPUESTA ── -->
+<section id="propuesta">
+  <div class="container">
+    <p class="section-label">07 — Propuesta de Solución</p>
+    <h2 class="section-title">Inversión justificada por impacto</h2>
+    <p class="section-lead">Una solución técnicamente viable y económicamente justificada por el costo de la inacción: miles de vidas, miles de millones de dólares.</p>
+
+    <div class="propuesta-grid">
+      <div>
+        <h3 style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: var(--slate);">Costo de inversión vs. impacto potencial</h3>
+
+        <div class="cost-bars">
+          <div class="cost-bar-row">
+            <div class="cost-bar-label">
+              <span>Sistema UAV/IA (inversión inicial)</span>
+              <span style="font-weight:600">~$850K USD</span>
+            </div>
+            <div class="cost-bar-track">
+              <div class="cost-bar-fill" style="width: 17%"></div>
+            </div>
+          </div>
+          <div class="cost-bar-row">
+            <div class="cost-bar-label">
+              <span>Costo de erupción sin alerta (estimado mínimo)</span>
+              <span style="font-weight:600">~$5,000M USD</span>
+            </div>
+            <div class="cost-bar-track">
+              <div class="cost-bar-fill alt" style="width: 100%"></div>
+            </div>
+          </div>
+          <div class="cost-bar-row">
+            <div class="cost-bar-label">
+              <span>Mantenimiento anual flota UAV</span>
+              <span style="font-weight:600">~$120K USD</span>
+            </div>
+            <div class="cost-bar-track">
+              <div class="cost-bar-fill" style="width: 8%"></div>
+            </div>
+          </div>
+          <div class="cost-bar-row">
+            <div class="cost-bar-label">
+              <span>Capacitación y operaciones anuales</span>
+              <span style="font-weight:600">~$80K USD</span>
+            </div>
+            <div class="cost-bar-track">
+              <div class="cost-bar-fill" style="width: 6%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 2rem; background: var(--orange-pale); border-radius: 10px; padding: 1.25rem; border-left: 3px solid var(--orange);">
+          <div style="font-weight: 700; font-size: 0.9rem; color: var(--orange-deep); margin-bottom: 4px;">ROI de seguridad estimado</div>
+          <div style="font-family: var(--font-display); font-size: 2.2rem; font-weight: 700; color: var(--slate); letter-spacing: -0.04em;">5,882<small style="font-size:1rem; font-weight:500; color: var(--slate-light)">x</small></div>
+          <div style="font-size: 0.78rem; color: var(--slate-light);">Retorno en valor protegido vs. costo del sistema en su ciclo de vida de 10 años.</div>
+        </div>
+      </div>
+
+      <div>
+        <h3 style="font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; margin-bottom: 1rem; color: var(--slate);">Implicaciones del sistema de alerta temprana</h3>
+        <div class="impl-list">
+          <div class="impl-item">
+            <div class="impl-icon">✈️</div>
+            <div>
+              <div class="impl-title">Aviación Civil</div>
+              <div class="impl-text">Alertas precisas de ceniza permiten cierres quirúrgicos del espacio aéreo en lugar de bloqueos masivos. El corredor Bogotá–Cali permanece operativo con datos de dispersión en tiempo real para la Aerocivil.</div>
+            </div>
+          </div>
+          <div class="impl-item">
+            <div class="impl-icon">⚡</div>
+            <div>
+              <div class="impl-title">Hidroeléctricas del Tolima</div>
+              <div class="impl-text">12 horas de anticipación permiten desviar flujos de agua y activar compuertas de emergencia antes de que los lahares alcancen las cuencas del Gualí y Lagunilla.</div>
+            </div>
+          </div>
+          <div class="impl-item">
+            <div class="impl-icon">🏘️</div>
+            <div>
+              <div class="impl-title">Evacuación de 64 municipios</div>
+              <div class="impl-text">El protocolo de la UNGRD requiere mínimo 8 horas para evacuación efectiva. Con 12 horas de antelación, los 2 millones de personas en zona de riesgo pueden ser desplazadas con margen operacional.</div>
+            </div>
+          </div>
+          <div class="impl-item">
+            <div class="impl-icon">☕</div>
+            <div>
+              <div class="impl-title">Agricultura del Eje Cafetero</div>
+              <div class="impl-text">El café colombiano, con exportaciones de $2.7B USD anuales, es vulnerable a la caída de ceniza. Las alertas permiten activar cubiertas de protección y planes de contingencia agrícola.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── VIDEO ── -->
+<section id="video">
+  <div class="container">
+    <p class="section-label">08 — Video Resumen</p>
+    <h2 class="section-title">El proyecto en 3 minutos</h2>
+    <p class="section-lead">Una narrativa visual de cómo cinco estudiantes de ingeniería aeronáutica desarrollaron una propuesta para proteger 2 millones de vidas.</p>
+
+    <div class="video-placeholder" onclick="this.style.background='rgba(0,0,0,0.6)'">
+      <div class="play-btn">▶</div>
+      <div class="video-caption">
+        VULCAN-AI 2026 — Equipo Ramón, Ibáñez, Arenas, Losada, Romero · Universidad de Antioquia
+      </div>
+    </div>
+
+    <div style="margin-top: 1.5rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+      <div style="background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 1rem 1.5rem; flex: 1; min-width: 200px;">
+        <div style="font-size: 0.72rem; color: rgba(248,248,246,0.4); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;">Duración</div>
+        <div style="font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--snow);">3:45</div>
+      </div>
+      <div style="background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 1rem 1.5rem; flex: 1; min-width: 200px;">
+        <div style="font-size: 0.72rem; color: rgba(248,248,246,0.4); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;">Formato</div>
+        <div style="font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--snow);">4K — 2026</div>
+      </div>
+      <div style="background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.1); border-radius: 10px; padding: 1rem 1.5rem; flex: 1; min-width: 200px;">
+        <div style="font-size: 0.72rem; color: rgba(248,248,246,0.4); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px;">Producción</div>
+        <div style="font-family: var(--font-display); font-size: 1.3rem; font-weight: 700; color: var(--snow);">Equipo UAdeA</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CRÓNICA ── -->
+<section id="cronica">
+  <div class="container">
+    <p class="section-label">09 — Bitácora del Proyecto</p>
+    <h2 class="section-title">Crónica: construir desde la incertidumbre</h2>
+    <p class="section-lead">El proceso real detrás del proyecto — retos, decisiones difíciles y aprendizajes que ningún libro de texto enseña.</p>
+
+    <div class="cronica-timeline">
+
+      <div class="cronica-entry">
+        <div class="cronica-date">Semana 1</div>
+        <div class="cronica-dot"></div>
+        <div class="cronica-body">
+          <div class="cronica-title">El primer problema: ¿por dónde empezar?</div>
+          <div class="cronica-text">La primera reunión fue honestamente caótica. Cinco perspectivas diferentes sobre qué era lo más importante: ¿el impacto social? ¿la tecnología UAV? ¿el análisis económico? Pasamos dos horas dando vueltas hasta que alguien propuso mapear primero el problema antes de proponer la solución. Fue el primer aprendizaje real del proyecto.</div>
+          <span class="cronica-tag tag-reto">Reto: coordinación inicial</span>
+        </div>
+      </div>
+
+      <div class="cronica-entry">
+        <div class="cronica-date">Semana 2–3</div>
+        <div class="cronica-dot"></div>
+        <div class="cronica-body">
+          <div class="cronica-title">Entender la geoquímica volcánica desde cero</div>
+          <div class="cronica-text">La relación CO₂/SO₂ como indicador de magma profundo no estaba en ninguno de nuestros libros de física. Tocó buscar papers, contactar fuentes del SGC y entender la química de gases volcánicos. Fue frustrante — y también el momento donde el proyecto se volvió realmente nuestro, porque dejamos de copiar y empezamos a aprender.</div>
+          <span class="cronica-tag tag-aprendizaje">Aprendizaje: investigación real</span>
+        </div>
+      </div>
+
+      <div class="cronica-entry">
+        <div class="cronica-date">Semana 4</div>
+        <div class="cronica-dot"></div>
+        <div class="cronica-body">
+          <div class="cronica-title">El algoritmo de Shannon: matemática que cobra sentido</div>
+          <div class="cronica-text">Entropía de Shannon lo habíamos visto en teoría de la información. Nunca imaginamos que esa fórmula era la misma que usaban los sismólogos para detectar precursores eruptivos. Ver cómo la matemática abstracta se conecta con salvar vidas en el Tolima fue uno de esos momentos que justifican estudiar ingeniería.</div>
+          <span class="cronica-tag tag-logro">Logro: conexión interdisciplinar</span>
+        </div>
+      </div>
+
+      <div class="cronica-entry">
+        <div class="cronica-date">Semana 5</div>
+        <div class="cronica-dot"></div>
+        <div class="cronica-body">
+          <div class="cronica-title">La presentación económica: justificar ante alguien escéptico</div>
+          <div class="cronica-text">El mayor reto fue la justificación económica. ¿Cómo valorar una vida humana? ¿Cómo monetizar el riesgo catastrófico? Tuvimos una discusión fuerte sobre ética vs. pragmatismo. Al final aprendimos que en política pública, los números importan — no porque las vidas se reduzcan a dinero, sino porque los tomadores de decisión necesitan ese lenguaje para actuar.</div>
+          <span class="cronica-tag tag-reto">Reto: ética y cifras</span>
+        </div>
+      </div>
+
+      <div class="cronica-entry">
+        <div class="cronica-date">Semana 6</div>
+        <div class="cronica-dot"></div>
+        <div class="cronica-body">
+          <div class="cronica-title">La página web: cuando el formato se vuelve mensaje</div>
+          <div class="cronica-text">El formato de entrega libre fue liberador e intimidante a la vez. ¿Por qué una página web? Porque una propuesta tecnológica debe demostrar competencia tecnológica en su propia presentación. Aprendimos diseño de información, jerarquía visual y cómo comunicar ciencia compleja sin sacrificar rigor. Eso no está en el pensum — y es exactamente lo que debería estar.</div>
+          <span class="cronica-tag tag-aprendizaje">Aprendizaje: comunicación técnica</span>
+        </div>
+      </div>
+
+      <div class="cronica-entry">
+        <div class="cronica-date">Cierre</div>
+        <div class="cronica-dot"></div>
+        <div class="cronica-body">
+          <div class="cronica-title">Lo que nos llevamos</div>
+          <div class="cronica-text">Este proyecto nos enseñó que la ingeniería aeronáutica no existe en el vacío: existe en el contexto de personas reales, economías vulnerables y decisiones políticas. Aprendimos a trabajar con incertidumbre, a defender ideas bajo presión y a que el mejor trabajo surge cuando el equipo tiene libertad para disentir. El Nevado del Ruiz seguirá ahí — y ojalá, algún día, una versión de esta solución también.</div>
+          <span class="cronica-tag tag-logro">Logro: visión de ingeniería completa</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section id="cta">
+  <div class="container" style="text-align:center">
+    <p class="section-label" style="color:rgba(255,255,255,0.7)">Acción</p>
+    <h2 class="section-title" style="max-width:800px; margin: 0 auto;">El Nevado del Ruiz no espera. La tecnología para protegerlo ya existe.</h2>
+    <p class="section-lead" style="color:rgba(255,255,255,0.75); margin: 1.25rem auto 0;">Informe técnico completo disponible para la UNGRD, SGC, Aerocivil y organismos internacionales de gestión de riesgos volcánicos.</p>
+    <div class="cta-actions">
+      <a href="#metodologia" class="btn-white">
+        📄 Acceder al Informe Técnico 2026
+      </a>
+      <a href="#comparativa" class="btn-outline-white">
+        🌐 Ver Gemelo Digital
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div>
+        <div class="footer-logo">VULCAN-AI 2026</div>
+        <div class="footer-authors">
+          Sistemas Aeroespaciales Autónomos para el Monitoreo del<br/>
+          Complejo Volcánico Nevado del Ruiz<br/><br/>
+          <a href="#equipo">Ramón · Ibáñez · Arenas · Losada · Romero</a><br/>
+          Ingeniería Aeronáutica — Universidad de Antioquia<br/>
+          Medellín, Colombia · 2026
+        </div>
+      </div>
+      <div class="footer-meta">
+        <div class="footer-badge">Basado en datos 2024–2025</div>
+        <br/>
+        <div style="color:rgba(248,248,246,0.35); line-height: 1.9;">
+          Informe para:<br/>
+          UNGRD · SGC · Aerocivil<br/>
+          Observatorios Vulcanológicos<br/>
+          Organismos Internacionales
+        </div>
+      </div>
+    </div>
+    <div class="footer-divider">
+      Proyecto académico — Física de Campos y Ondas · Universidad de Antioquia · 2026
+    </div>
+  </div>
+</footer>
+
+<script>
+  function showTab(id, btn) {
+    document.querySelectorAll('.ref-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.ref-content').forEach(c => c.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('tab-' + id).classList.add('active');
+  }
+
+  // Animate bars on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.cost-bar-fill').forEach(b => {
+          const w = b.style.width;
+          b.style.width = '0';
+          setTimeout(() => { b.style.width = w; }, 100);
+        });
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.cost-bars').forEach(el => observer.observe(el));
+
+  // Smooth nav active state
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => {
+      if (window.scrollY >= s.offsetTop - 100) current = s.id;
+    });
+    navLinks.forEach(a => {
+      a.style.color = a.getAttribute('href') === '#' + current
+        ? 'var(--orange)' : '';
+    });
+  });
+</script>
+</body>
+</html>
